@@ -2,7 +2,7 @@
 Realistic simulator for termoluminiscense made in python with a web app made with streamlit.
 
 
-#Instrucciones para usar el simulador:
+# Instrucciones para usar el simulador:
 
 			Archivos:
 -En la carpeta están: los excel con los datos enla carpeta 'datos',
