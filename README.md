@@ -1,2 +1,43 @@
 # TLSimulatorApp
 Realistic simulator for termoluminiscense made in python with a web app made with streamlit.
+
+
+#Instrucciones para usar el simulador:
+
+			Archivos:
+-En la carpeta están: los excel con los datos enla carpeta 'datos',
+	en la carpeta 'pages' está el scrip de la pagina que simula elcalentamiento (En streamlit para hacer multipagina basta con añadir 
+	scrips de la pagina en la carpeta pages.
+	también se guardan cal.jpg, irrad.jpg, curva.jpg y ci.csv que contienen datos que se
+	 actualizan durante la simulacion para utilizarlos (mostrar imagenes y condiciones iniciales), app.py es el scrip principal.
+
+		Instrucciones para iniciar el simulador:
+
+-Para poder utilizar el simulador, tenemos que abrir app.py con streamlit desde una terminal en
+un entorno con streamlit instalado
+-Para mí lo más cómodo para trabajar en el entorno que quiero es abrirlo desde la terminal de anaconda (CMD.exe Pronpt) estando en el entorno que yo quiera (Es conveniente en muchos casos 
+usar distintos entornos para distintos proyectos por si hay paquetes que tienen incompatibilidades entre si)
+-Una vez estás en la terminal del entorno elegido: lo primero es instalar streamlit usando pip, escribimos para ello el comando: pip install streamlit    
+-Tras instalarlo podemos correr el comando de streamlit: streamlit hello 
+	así vemos si la instalación ha funcionado todo bien y de paso vemos enlaces utiles de
+	streamlit como la documentación y ejemplos de cosas que se pueden hacer.
+-Ahora lo que tenemos que hacer es en la terminal movernos al directorio donde esté el archivo app.py (a la carpeta simuladorApp)
+-Una vez en la carpeta ejecutamos app.py con streamlit con el comando: streamlit run app.py
+
+	Tras esto si todo ha ido bien, debiese de abrirse en una pestaña en el navegador predeterminado y en la terminal debe aparecer un url.
+
+-El simulador aun tiene  poca funcionalidad, está implementada la simulación de la irradiación la relajación y el calentamiento obteniendo la curva de luz, pero: 
+		-Da un error al iniciar porque el campo del tiempo de irradiación está vacío, es normal, para solucionarlo solo escribe un tiempo de irradiación y pulsa enviar (debo solucionarlo ahora que ya está hecho el poder simular los procesos)
+
+		-El tiempo de irradiación y relajación siempre son el mismo (solo tiene como parámetro de entrada el tiempo de irradiación)
+
+
+-Para simular el calentamiento, en la barra lateral de la izquierda, una vez simulada la irradiación y la relajación, pulsas calentamiento para moverte a la pagina donde se simula el calentamiento (me pareción interesante poner distintas cosas en distintas páginas, pero si se ve mejor puedo poner en la misma página), y pulsas el botón iniciar calentamiento.
+		-Los textos posiblemente estén mal, aun no he hecho ninguna revisión en ese aspecto.
+		
+	Funcionamiento:
+
+	-Aquí lo que está pasando es que simulamos la irradiación y va guardando cada cierto numero de iteracciones una imagen y la muestra, luego hace lo mismo con la relajación.
+	-Al acabar, guarda el último dato de la relajación en un .csv para utilizarlo como condición inicial en el calentamiento.
+
+	-En el calentamiento he dividido en 'trozos' para mostrar imagen de la misma forma cuando resuelve ese 'trozo'.
