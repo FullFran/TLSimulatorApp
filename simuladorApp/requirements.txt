@@ -1,8 +1,1 @@
-
-lxml @ file:///C:/ci/lxml_1657527445690/work
-markdown-it-py==2.1.0
-MarkupSafe @ file:///C:/ci/markupsafe_1654508077284/work
-matplotlib @ file:///C:/b/abs_03z_dj2gty/croot/matplotlib-suite_1670466145509/work
-matplotlib-inline @ file:///C:/ci/matplotlib-inline_1661915841596/work
-numpy @ file:///C:/b/abs_datssh7cer/croot/numpy_and_numpy_base_1672336199388/work
 scipy==1.10.0
