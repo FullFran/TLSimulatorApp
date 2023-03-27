@@ -391,8 +391,8 @@ if st.button('Empezar simulación'):
             plt.xlabel('t(s)')
 
             plt.ylabel('Concentración')
-            plt.savefig('irrad.jpg')
-        image = 'irrad.jpg'
+            plt.savefig('src/irrad.jpg')
+        image = 'src/irrad.jpg'
         imagen.empty()
         with imagen.container():
             st.image(image, caption='Concentración de electrones en las trampas', width=None,
@@ -410,8 +410,8 @@ if st.button('Empezar simulación'):
         plt.title('Concentracion de electrones en las trampas en la irradiación')
         plt.xlabel('t(s)')
         plt.ylabel('Concentración')
-        plt.savefig('irrad.jpg')
-        image = 'irrad.jpg'
+        plt.savefig('src/irrad.jpg')
+        image = 'src/irrad.jpg'
 
     imagen.empty()
     with imagen.container():
@@ -443,8 +443,8 @@ if st.button('Empezar simulación'):
             plt.xlabel('t(s)')
 
             plt.ylabel('Concentración')
-            plt.savefig('relaj.jpg')
-            imager = 'relaj.jpg'
+            plt.savefig('src/relaj.jpg')
+            imager = 'src/relaj.jpg'
 
         imagen.empty()
         with imagen.container():
@@ -463,8 +463,8 @@ if st.button('Empezar simulación'):
         plt.title('Concentracion de electrones en las trampas en la relajación')
         plt.xlabel('t(s)')
         plt.ylabel('Concentración')
-        plt.savefig('relaj.jpg')
-        imager = 'relaj.jpg'
+        plt.savefig('src/relaj.jpg')
+        imager = 'src/relaj.jpg'
 
     imagen.empty()
     with imagen.container():
@@ -472,7 +472,7 @@ if st.button('Empezar simulación'):
                  use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
     ci = pd.DataFrame(xr[-1])
-    ci.to_csv('ci.csv')
+    ci.to_csv('src/ci.csv')
 
     st.write('simulación completada')
 
@@ -486,7 +486,7 @@ beta = 2  # Este parámetro es la pendiente de la curva de calentamiento
 # aquí definimos la temperatura máxima que queremos alcanzar en grados kelvin
 mtc = ((230+273.15)-Tamb)/beta
 
-CC = pd.read_csv('ci.csv')
+CC = pd.read_csv('src/ci.csv')
 CC = CC.to_numpy()
 if st.button('iniciar calentamiento'):
     for i in range(len(N)):
@@ -528,15 +528,15 @@ if st.button('iniciar calentamiento'):
             plt.xlabel('t(s)')
 
             plt.ylabel('Concentración')
-        plt.savefig('cal.jpg')
-        imagec = 'cal.jpg'
+        plt.savefig('src/cal.jpg')
+        imagec = 'src/cal.jpg'
         plt.figure(2)
         plt.plot(ttemp/mt*200,tlc)
         plt.plot(200,0)
         plt.title('Curva tld-100')
         plt.xlabel('canal')
-        plt.savefig('curva.jpg')
-        imagecu='curva.jpg'
+        plt.savefig('src/curva.jpg')
+        imagecu='src/curva.jpg'
         imac.empty()
         with imac.container():
             st.image(imagec, caption='Irradiación',
