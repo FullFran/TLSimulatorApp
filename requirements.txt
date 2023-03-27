@@ -2,3 +2,4 @@
 matplotlib 
 matplotlib-inline 
 scipy==1.10.0
+openpyxl
