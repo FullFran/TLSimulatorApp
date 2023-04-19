@@ -12,7 +12,7 @@ import streamlit as st
 # Ejecuta esta celda para introducir los datos
 datostld100='datos/datostld100.xlsx'
 DatosEntrada = pd.read_excel(
-    'datos/datostld100.xlsx', sheet_name='Hoja1', header=0, usecols=None, nrows=None)
+    datostld100, sheet_name='Hoja1', header=0, usecols=None, nrows=None)
 
 dfnew = DatosEntrada
 
@@ -66,7 +66,7 @@ n_h = n_h.to_numpy()
 
 def leer_datos(dfnew):
 
-    dfnew = DatosEntrada
+    
 
     E = dfnew.iloc[:, 0]         # Energia de Activación (eV).
     s = dfnew.iloc[:, 1]         # Factor de Frecuencia (s-1).
@@ -135,12 +135,12 @@ kb = 0.00008617333262
 Nsat=np.ones(len(N))*10**11 #aquí definimos el N de saturación y corregimos el numero de trampas en 4 a parte de definir las funciones de N
 # N[3]=N[3]/2
 # N[4]=3*N[4]/4
-
-Nsat[0]=Nsat[0]*25
-Nsat[1]=Nsat[1]*10
-Nsat[2]=Nsat[2]*5
-Nsat[3]=Nsat[3]*5
-Nsat[4]=Nsat[4]*65
+if len(N)==5:
+    Nsat[0]=Nsat[0]*25
+    Nsat[1]=Nsat[1]*10
+    Nsat[2]=Nsat[2]*5
+    Nsat[3]=Nsat[3]*5
+    Nsat[4]=Nsat[4]*65
 
 
 def Ng(t, i):  # En esta función simulamos la creación de trampas durante la irradiación
@@ -344,10 +344,19 @@ if option == "Cargar archivo Excel":
     # Subir un archivo Excel para crear un DataFrame
     st.header("Cargar archivo Excel para crear DataFrame")
     file = st.file_uploader("Selecciona un archivo Excel para crear un DataFrame", type=["xlsx"])
-    if file:
-        df2 = pd.read_excel(file)
+    if file is not None:
+        df2 = pd.read_excel(file, sheet_name='Hoja1', header=0, usecols=None, nrows=None)
         E,s,n,N,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h=leer_datos(df2)
-    st.write(df2)
+        # Condiciones iniciales
+        nn = np.array(n_c[0])
+        for i in range(len(n)):
+            nn = np.append(nn, n[i])
+        nn = np.append(nn, m_R[0])
+        nn = np.append(nn, m_NR[0])
+        nn = np.append(nn, n_h[0])
+        Nsat=np.ones(len(N))*10**11
+        NN=np.zeros(len(N))
+        st.write(df2)
 if st.button('Empezar simulación'):
 
     warning = st.empty()
