@@ -66,7 +66,7 @@ n_h = n_h.to_numpy()
 
 def leer_datos(dfnew):
 
-    
+    dfnew = DatosEntrada
 
     E = dfnew.iloc[:, 0]         # Energia de Activación (eV).
     s = dfnew.iloc[:, 1]         # Factor de Frecuencia (s-1).
