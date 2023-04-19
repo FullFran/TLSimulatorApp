@@ -337,10 +337,6 @@ option = st.selectbox("Seleccione una opción:", ("Usar archivo existente", "Car
 # Descargar el archivo Excel
 
 
-#hola()
-
-
-
 
 
 if option == "Cargar archivo Excel":
