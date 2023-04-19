@@ -47,8 +47,9 @@ f = dfnew.iloc[0:1, 14]     # Factor de generacion de pares e-h (cm-3·s-1).
 n_c = dfnew.iloc[0:1, 15]
 # Concentración de huecos libres en la banda de Valencia (cm-3).
 n_h = dfnew.iloc[0:1, 16]
-
-
+# Nivel de Fermi (Ev)
+Ef = dfnew.iloc[0:1, 17]
+Ef=float(Ef)
 E = E.to_numpy()
 s = s.to_numpy()
 n = n.to_numpy()
@@ -101,7 +102,8 @@ def leer_datos(dfnew):
     n_c = dfnew.iloc[0:1, 15]
     # Concentración de huecos libres en la banda de Valencia (cm-3).
     n_h = dfnew.iloc[0:1, 16]
-
+    # Nivel de Fermi (Ev)
+    Ef = dfnew.iloc[0:1, 17]
 
     E = E.to_numpy()
     s = s.to_numpy()
@@ -119,7 +121,10 @@ def leer_datos(dfnew):
     f = f.to_numpy()
     n_c = n_c.to_numpy()
     n_h = n_h.to_numpy()
-    return E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h
+    # Nivel de Fermi (Ev)
+    Ef = Ef.to_numpy()
+    Ef=float(Ef)
+    return E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h,Ef
 
 # Condiciones iniciales
 nn = np.array(n_c[0])
@@ -154,9 +159,10 @@ def Ng(t, i):  # En esta función simulamos la creación de trampas durante la i
     return Ngg
 
 
+
 def Nee(E, i, T):  # Esta es la distribución de Fermi-Dirac que utilizaremos en la irradiación
     Ngg = []
-    Ngg = N[i]/(1+np.exp((E-2.7)/(kb*T)))
+    Ngg = N[i]/(1+np.exp((E-Ef)/(kb*T)))
     return Ngg
 
 
@@ -349,7 +355,7 @@ if option == "Cargar archivo Excel":
     file = st.file_uploader("Selecciona un archivo Excel para crear un DataFrame", type=["xlsx"])
     if file is not None:
         df2 = pd.read_excel(file, sheet_name='Hoja1', header=0, usecols=None, nrows=None)
-        E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h=leer_datos(df2)
+        E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h,Ef=leer_datos(df2)
         # Condiciones iniciales
         nn = np.array(n_c[0])
         for i in range(len(n)):
