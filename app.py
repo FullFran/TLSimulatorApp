@@ -344,10 +344,10 @@ if option == "Cargar archivo Excel":
     # Subir un archivo Excel para crear un DataFrame
     st.header("Cargar archivo Excel para crear DataFrame")
     file = st.file_uploader("Selecciona un archivo Excel para crear un DataFrame", type=["xlsx"])
-    if file:
-        df2 = pd.read_excel(file)
-        E,s,n,N,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h=leer_datos(df2)
-        st.write(df2)
+    #if file:
+    df2 = pd.read_excel(file)
+    E,s,n,N,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h=leer_datos(df2)
+    st.write(df2)
 if st.button('Empezar simulación'):
 
     warning = st.empty()
