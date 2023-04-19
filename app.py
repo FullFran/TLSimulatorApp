@@ -22,31 +22,34 @@ s = dfnew.iloc[:, 1]         # Factor de Frecuencia (s-1).
 n = dfnew.iloc[:, 2]
 # Numero de posiciones acesibles por los electrnes de la BC a la Trampa (cm-3).
 N = dfnew.iloc[:, 3]
+# Numero de posiciones acesibles por los electrones alcanzada la saturación (cm-3).
+N_sat=dfnew.iloc[:, 4]
 # Coeficiente de Probabilidad de atrapamiento de electrones de a trampa (cm+3·s-1).
-A = dfnew.iloc[:, 4]
+A = dfnew.iloc[:, 5]
 # Coeficiente de probabilidad de recombinacion e-h Radiativa (cm+3·s-1).
-Amn_R = dfnew.iloc[0:1, 5]
+Amn_R = dfnew.iloc[0:1, 6]
 # Coeficiente de probabilidad de recombinacion e-h No Radiativa (cm+3·s-1).
-Amn_NR = dfnew.iloc[0:1, 6]
+Amn_NR = dfnew.iloc[0:1, 7]
 # Coeficiente de Probabilidad de atrapamiento de huecos de la BV al Centro de Recombinacion Radiativo (cm+3·s-1).
-A_R = dfnew.iloc[0:1, 7]
+A_R = dfnew.iloc[0:1, 8]
 # Coeficiente de Probabilidad de atrapamiento de huecos de la BV al Centro de Recombinacion No Radiativo (cm+3·s-1).
-A_NR = dfnew.iloc[0:1, 8]
+A_NR = dfnew.iloc[0:1, 9]
 # Numero de posiciones acesibles huecos de la BV al Centro de Recombinacion Radiativo (cm-3).
-M_R = dfnew.iloc[0:1, 9]
+M_R = dfnew.iloc[0:1, 10]
 # Numero de posiciones acesibles huecos de la BV al Centro de Recombinacion No Radiativo (cm-3).
-M_NR = dfnew.iloc[0:1, 10]
+M_NR = dfnew.iloc[0:1, 11]
 # Concentracion de h atrapados en el centro de recombonacion radiativo (cm-3).
-m_R = dfnew.iloc[0:1, 11]
+m_R = dfnew.iloc[0:1, 12]
 # Concentracion de h atrapados en el centro de recombonacion no radiativo (cm-3).
-m_NR = dfnew.iloc[0:1, 12]
-f = dfnew.iloc[0:1, 13]     # Factor de generacion de pares e-h (cm-3·s-1).
+m_NR = dfnew.iloc[0:1, 13]
+f = dfnew.iloc[0:1, 14]     # Factor de generacion de pares e-h (cm-3·s-1).
 # Concentración de electrones libres en la banda de conduccion (cm-3).
-n_c = dfnew.iloc[0:1, 14]
+n_c = dfnew.iloc[0:1, 15]
 # Concentración de huecos libres en la banda de Valencia (cm-3).
-n_h = dfnew.iloc[0:1, 15]
-
-
+n_h = dfnew.iloc[0:1, 16]
+# Nivel de Fermi (Ev)
+Ef = dfnew.iloc[0:1, 17]
+Ef=float(Ef)
 E = E.to_numpy()
 s = s.to_numpy()
 n = n.to_numpy()
@@ -74,30 +77,33 @@ def leer_datos(dfnew):
     n = dfnew.iloc[:, 2]
     # Numero de posiciones acesibles por los electrnes de la BC a la Trampa (cm-3).
     N = dfnew.iloc[:, 3]
+    # Numero de posiciones acesibles por los electrones alcanzada la saturación (cm-3).
+    Nsat=dfnew.iloc[:, 4]
     # Coeficiente de Probabilidad de atrapamiento de electrones de a trampa (cm+3·s-1).
-    A = dfnew.iloc[:, 4]
+    A = dfnew.iloc[:, 5]
     # Coeficiente de probabilidad de recombinacion e-h Radiativa (cm+3·s-1).
-    Amn_R = dfnew.iloc[0:1, 5]
+    Amn_R = dfnew.iloc[0:1, 6]
     # Coeficiente de probabilidad de recombinacion e-h No Radiativa (cm+3·s-1).
-    Amn_NR = dfnew.iloc[0:1, 6]
+    Amn_NR = dfnew.iloc[0:1, 7]
     # Coeficiente de Probabilidad de atrapamiento de huecos de la BV al Centro de Recombinacion Radiativo (cm+3·s-1).
-    A_R = dfnew.iloc[0:1, 7]
+    A_R = dfnew.iloc[0:1, 8]
     # Coeficiente de Probabilidad de atrapamiento de huecos de la BV al Centro de Recombinacion No Radiativo (cm+3·s-1).
-    A_NR = dfnew.iloc[0:1, 8]
+    A_NR = dfnew.iloc[0:1, 9]
     # Numero de posiciones acesibles huecos de la BV al Centro de Recombinacion Radiativo (cm-3).
-    M_R = dfnew.iloc[0:1, 9]
+    M_R = dfnew.iloc[0:1, 10]
     # Numero de posiciones acesibles huecos de la BV al Centro de Recombinacion No Radiativo (cm-3).
-    M_NR = dfnew.iloc[0:1, 10]
+    M_NR = dfnew.iloc[0:1, 11]
     # Concentracion de h atrapados en el centro de recombonacion radiativo (cm-3).
-    m_R = dfnew.iloc[0:1, 11]
+    m_R = dfnew.iloc[0:1, 12]
     # Concentracion de h atrapados en el centro de recombonacion no radiativo (cm-3).
-    m_NR = dfnew.iloc[0:1, 12]
-    f = dfnew.iloc[0:1, 13]     # Factor de generacion de pares e-h (cm-3·s-1).
+    m_NR = dfnew.iloc[0:1, 13]
+    f = dfnew.iloc[0:1, 14]     # Factor de generacion de pares e-h (cm-3·s-1).
     # Concentración de electrones libres en la banda de conduccion (cm-3).
-    n_c = dfnew.iloc[0:1, 14]
+    n_c = dfnew.iloc[0:1, 15]
     # Concentración de huecos libres en la banda de Valencia (cm-3).
-    n_h = dfnew.iloc[0:1, 15]
-
+    n_h = dfnew.iloc[0:1, 16]
+    # Nivel de Fermi (Ev)
+    Ef = dfnew.iloc[0:1, 17]
 
     E = E.to_numpy()
     s = s.to_numpy()
@@ -115,7 +121,10 @@ def leer_datos(dfnew):
     f = f.to_numpy()
     n_c = n_c.to_numpy()
     n_h = n_h.to_numpy()
-    return E,s,n,N,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h
+    # Nivel de Fermi (Ev)
+    Ef = Ef.to_numpy()
+    Ef=float(Ef)
+    return E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h,Ef
 
 # Condiciones iniciales
 nn = np.array(n_c[0])
@@ -150,9 +159,10 @@ def Ng(t, i):  # En esta función simulamos la creación de trampas durante la i
     return Ngg
 
 
+
 def Nee(E, i, T):  # Esta es la distribución de Fermi-Dirac que utilizaremos en la irradiación
     Ngg = []
-    Ngg = N[i]/(1+np.exp((E-2.7)/(kb*T)))
+    Ngg = N[i]/(1+np.exp((E-Ef)/(kb*T)))
     return Ngg
 
 
@@ -337,10 +347,6 @@ option = st.selectbox("Seleccione una opción:", ("Usar archivo existente", "Car
 # Descargar el archivo Excel
 
 
-#hola()
-
-
-
 
 
 if option == "Cargar archivo Excel":
@@ -349,7 +355,7 @@ if option == "Cargar archivo Excel":
     file = st.file_uploader("Selecciona un archivo Excel para crear un DataFrame", type=["xlsx"])
     if file is not None:
         df2 = pd.read_excel(file, sheet_name='Hoja1', header=0, usecols=None, nrows=None)
-        E,s,n,N,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h=leer_datos(df2)
+        E,s,n,N,Nsat,A,Amn_R,Amn_NR, A_R,A_NR,M_R,m_R,m_NR,f,n_c,n_h,Ef=leer_datos(df2)
         # Condiciones iniciales
         nn = np.array(n_c[0])
         for i in range(len(n)):
@@ -357,7 +363,6 @@ if option == "Cargar archivo Excel":
         nn = np.append(nn, m_R[0])
         nn = np.append(nn, m_NR[0])
         nn = np.append(nn, n_h[0])
-        Nsat=np.ones(len(N))*10**11
         NN=np.zeros(len(N))
         st.write(df2)
 if st.button('Empezar simulación'):
