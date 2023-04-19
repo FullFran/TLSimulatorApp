@@ -318,15 +318,18 @@ form = st.form('Entrada')
 a=form.write('Introduzca el tiempo de irradiación')
 a = form.number_input('Tiempo de irradiación:')
 b = form.number_input('Tiempo de relajación:')
+c=form.number_input('Beta:')
 form.form_submit_button('Enviar')
 tmax= a
 tmaxr=b
+beta=c
 tmax = float(tmax)
 if tmax == -9999:
     st.write('Introduzca el tiepo de irradiación.')
 else:
     st.write('Tiempo de irradiación='+str(tmax))
     st.write('Tiempo de relajación= '+str(tmaxr))
+    st.write('Beta= '+str(beta))
 
 # Preguntar al usuario si desea usar un archivo existente o cargar uno nuevo
 option = st.selectbox("Seleccione una opción:", ("Usar archivo existente", "Cargar archivo Excel"))
@@ -501,7 +504,7 @@ if st.button('iniciar calentamiento'):
     for i in range(len(N)):
         # aquí estamos actualizando el numero de trampas que hay después de crearse para que lo use el resto de funciones
         NN[i] = NFCT(E[i], i, 297.15, tmax)
-    beta = 10
+    beta=c
     # aquí definimos la temperatura máxima que queremos alcanzar en grados kelvin
     mt = ((230+273.15)-Tamb)/beta
 
@@ -533,7 +536,7 @@ if st.button('iniciar calentamiento'):
             plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
             plt.xlim(0, 230)
             plt.title(
-                'Concentracion de electrones en las trampas en la relajación')
+                'Concentracion de electrones en las trampas, beta='+str(beta))
             plt.xlabel('t(s)')
 
             plt.ylabel('Concentración')
@@ -542,7 +545,7 @@ if st.button('iniciar calentamiento'):
         plt.figure(2)
         plt.plot(ttemp/mt*200,tlc)
         plt.plot(200,0)
-        plt.title('Curva tld-100')
+        plt.title('Curva tl, beta='+str(beta))
         plt.xlabel('canal')
         plt.savefig('src/curva.jpg')
         imagecu='src/curva.jpg'
