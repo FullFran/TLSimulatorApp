@@ -311,9 +311,16 @@ def tl(X, T, beta):  # Calculamos la curva de termoluminiscencia
 
 def tl200(X, T, beta):  # Guardamos 200 canales de la curva de termoluminiscencia
     Temp, TL = tl(X, T, beta)
+    ti200=np.linspace(T[0], T[-1], 200)
     t200 = np.linspace(Temp[0], Temp[-1], 200)
     tl200 = np.interp(t200, Temp, TL)
-    return t200, tl200
+    return t200, tl200,ti200
+def g200(X,T):
+    x = np.zeros((200, len(X[0])), dtype=X.dtype)
+    t=np.linspace(T[0], T[-1], 200)
+    for i in range(len(X[1])):
+        x[:,i]=np.interp(t, T, X[:,i])
+    return(x,t)
 
 
 # Iniziamos la variable que albergará el nuevo número de trampas
@@ -397,10 +404,10 @@ if st.button('Empezar simulación'):
             if solirad.status == 'finished':
 
                 break
-        xtemp = np.array(xi)
-        # Representamos la concentración en las trampas en la irradiación
+        xtemp,ttemp = g200(np.array(xi),ti)
+        #Representamos la concentración en las trampas en la irradiación
         for i in range(1, len(nn)-3):
-            plt.plot(ti, xtemp[:, i])
+            plt.plot(ttemp, xtemp[:, i])
             plt.plot(tmax, 0)
 
             plt.title(
@@ -422,8 +429,7 @@ if st.button('Empezar simulación'):
     xi = np.array(xi)
     plt.figure(1)
     for i in range(1, len(nn)-3):  # Representamos la concentración en las trampas en la irradiación
-        plt.plot(ti, xi[:, i], label=['x', i])
-        plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
+        plt.plot(ti, xi[:, i])
         plt.title('Concentracion de electrones en las trampas en la irradiación')
         plt.xlabel('t(s)')
         plt.ylabel('Concentración')
@@ -439,6 +445,7 @@ if st.button('Empezar simulación'):
                         rtol=0.01, atol=0.01, vectorized=False, first_step=None)
     tr = []
     xr = []  # Iniziamos la variable que
+    inii=time.time()
     for i in range(pasos):
         for i in range(1000):
             # get solution step state
@@ -458,7 +465,6 @@ if st.button('Empezar simulación'):
             plt.title(
                 'Concentracion de electrones en las trampas en la relajación')
             plt.xlabel('t(s)')
-
             plt.ylabel('Concentración')
             plt.savefig('src/relaj.jpg')
             imager = 'src/relaj.jpg'
@@ -471,12 +477,12 @@ if st.button('Empezar simulación'):
         if solrel.status == 'finished':
             print('Solucionao')
             break
-
+    finir=time.time()
+    print('resuelto en: '+str(finir-inii))
     xr = np.array(xr)
     plt.figure(3)
     for i in range(1, len(nn)-3):  # Representamos la concentración en las trampas en la irradiación
-        plt.plot(tr, xr[:, i], label=['x', i])
-        plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
+        plt.plot(tr, xr[:, i])
         plt.title('Concentracion de electrones en las trampas en la relajación')
         plt.xlabel('t(s)')
         plt.ylabel('Concentración')
@@ -533,12 +539,13 @@ if st.button('iniciar calentamiento'):
                 break
         xtemp = np.array(xc)
         ttemp=np.array(tc)
+        xg,tg=g200(xtemp,TT)
         # Representamos la concentración en las trampas en la relajación
-        temp,tlc=tl(xtemp.T,TT,beta)
+        temp,tlc,ti200=tl200(xtemp.T,tc,beta)
         for i in range(1, len(nn)-3):
-            plt.figure(1)
-            plt.plot(TT, xtemp[:, i], label=['x', i])
-            plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
+            fig=plt.figure(1)
+            #plt.plot(TT, xtemp[:, i], label=['x', i])
+            plt.plot(tg, xg[:, i])
             plt.xlim(0, 230)
             plt.title(
                 'Concentracion de electrones en las trampas, beta='+str(beta))
@@ -548,7 +555,8 @@ if st.button('iniciar calentamiento'):
         plt.savefig('src/cal.jpg')
         imagec = 'src/cal.jpg'
         plt.figure(2)
-        plt.plot(ttemp/mt*200,tlc)
+        #plt.plot(ttemp/mt*200,tlc)
+        plt.plot(ti200/mt*200,tlc,'g')
         plt.plot(200,0)
         plt.title('Curva tl, beta='+str(beta))
         plt.xlabel('canal')
