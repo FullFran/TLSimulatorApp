@@ -1,3 +1,5 @@
+Puedes decirme nombre de funciones que no utilicemos en este stript?
+
 import pandas as pd
 import numpy as np
 import scipy.integrate as integ
@@ -106,21 +108,16 @@ def NFCT(E, i, T, t):  # Aquí simulamos la creación de trampas durante la irra
 NN = N
 
 
-def Ne(E, i, T):  # Aquí definimos la distribución de Fermi-Dirac
-    # para utilizarla utilizando el numero de trampas disponibles tras la irradiación
+def Ne(E, i, T):  # Aquí definimos la distribución de Fermi-Dirac para utilizarla utilizando el numero de trampas disponibles tras la irradiación
     return NN[i] / (1 + np.exp((E - 2.7) / (kb * T)))
-
 
 Tamb = 273.15
 
-
-def TLIN(t, u):  # Con esta función simulamos la irradiación añadiendo la creación de trampas,
-    # utilizando la función de arrenius para la probabilidad
+def TLIN(t, u):  # Con esta función simulamos la irradiación añadiendo la creación de trampas, utilizando la función de arrenius para la probabilidad
     dx = np.zeros(len(nn))
     Constante_A = 0.0
     for i in range(1, len(dx) - 3):
-        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))
-                         ) + A[i - 1] * (Ng(t, i - 1) - u[i]) * u[0]
+        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))) + A[i - 1] * (Ng(t, i - 1) - u[i]) * u[0]
         Constante_A += dx[i]
     dx[0] = f - Constante_A - u[0] * (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
     dx[-3] = A_R[0] * (M_R[0] - u[-3]) * u[-1] - u[0] * (u[-3] * Amn_R[0])
@@ -134,15 +131,16 @@ def TLINE(t, u):  # Aquí simulamos la irradiación añadiendo la creación de t
     dx = np.zeros(len(nn))
     Constante_A = 0.0
     for i in range(1, len(dx) - 3):
-        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))) + \
-            A[i - 1] * (NFCT(E[i - 1], i - 1, Tamb, t) - u[i]) * u[0]
+        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))) + A[i - 1] * (NFCT(E[i - 1], i - 1, Tamb, t) - u[i]) * u[0]
         Constante_A += dx[i]
     dx[0] = f - Constante_A - u[0] * (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
     dx[-3] = A_R[0] * (M_R[0] - u[-3]) * u[-1] - u[0] * (u[-3] * Amn_R[0])
     dx[-2] = A_NR[0] * (M_NR[0] - u[-2]) * u[-1] - u[0] * (u[-2] * Amn_NR[0])
-    dx[-1] = f - u[-1] * (+A_R[0] * (M_R[0] - u[-3]) +
-                          A_NR[0] * (M_NR[0] - u[-2]))
+    dx[-1] = f - u[-1] * (+A_R[0] * (M_R[0] - u[-3]) + A_NR[0] * (M_NR[0] - u[-2]))
     return np.array(dx, dtype=object)
+
+
+
 
 
 def TLRNE(t, u):  # Simulamos la relajación tras la irradiación (reduciendo la fuente de radiación en un factor 1000) partiendo de las concentraciones y
@@ -150,15 +148,12 @@ def TLRNE(t, u):  # Simulamos la relajación tras la irradiación (reduciendo la
     dx = np.zeros(len(nn))
     Constante_A = 0.0
     for i in range(1, len(dx) - 3):
-        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))
-                         ) + A[i - 1] * (NN[i - 1] - u[i]) * u[0]
+        dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))) + A[i - 1] * (NN[i - 1] - u[i]) * u[0]
         Constante_A += dx[i]
-    dx[0] = f / 1000 - Constante_A - u[0] * \
-        (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
+    dx[0] = f / 1000 - Constante_A - u[0] * (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
     dx[-3] = A_R[0] * (M_R[0] - u[-3]) * u[-1] - u[0] * (u[-3] * Amn_R[0])
     dx[-2] = A_NR[0] * (M_NR[0] - u[-2]) * u[-1] - u[0] * (u[-2] * Amn_NR[0])
-    dx[-1] = f / 1000 - u[-1] * \
-        (+A_R[0] * (M_R[0] - u[-3]) + A_NR[0] * (M_NR[0] - u[-2]))
+    dx[-1] = f / 1000 - u[-1] * (+A_R[0] * (M_R[0] - u[-3]) + A_NR[0] * (M_NR[0] - u[-2]))
     return np.array(dx, dtype=object)
 
 
@@ -196,20 +191,13 @@ def TLE(t, u):  # Simulación del calentamiento
     Constante_A = 0.0
     for i in range(1, len(dx) - 3):
         if u[i] > 10:
-            dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))
-                             ) + A[i - 1] * (NN[i - 1] - u[i]) * u[0]
+            dx[i] = -u[i] * (s[i - 1] * np.exp(-E[i - 1] / (kb * Tamb))) + A[i - 1] * (NN[i - 1] - u[i]) * u[0]
             Constante_A += dx[i]
-    dx[0] = f / 1000 - Constante_A - u[0] * \
-        (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
+    dx[0] = f / 1000 - Constante_A - u[0] * (u[-3] * Amn_R[0] + u[-2] * Amn_NR[0])
     dx[-3] = A_R[0] * (M_R[0] - u[-3]) * u[-1] - u[0] * (u[-3] * Amn_R[0])
     dx[-2] = A_NR[0] * (M_NR[0] - u[-2]) * u[-1] - u[0] * (u[-2] * Amn_NR[0])
-    dx[-1] = f / 1000 - u[-1] * \
-        (+A_R[0] * (M_R[0] - u[-3]) + A_NR[0] * (M_NR[0] - u[-2]))
+    dx[-1] = f / 1000 - u[-1] * (+A_R[0] * (M_R[0] - u[-3]) + A_NR[0] * (M_NR[0] - u[-2]))
     return np.array(dx, dtype=object)
-
-
-def CT(t):
-    return 297.15 + float(t) * 10
 
 
 def TLECT(t, u):  # Simulación del calentamiento utilizando una curva de temperaturas
@@ -262,19 +250,23 @@ st.set_page_config(layout='wide')
 st.title('Sumulación irradiación y relajación')
 st.write('Esta es una prueba para hacer una herramienta web.')
 
+tmax = -9999
 form = st.form('Entrada')
 a = form.write('Introduzca el tiempo de irradiación')
-a = form.number_input('Tiempo de irradiación:', value=5)
-b = form.number_input('Tiempo de relajación:', value=5)
-c = form.number_input('Beta:', value=10)
+a = form.number_input('Tiempo de irradiación:')
+b = form.number_input('Tiempo de relajación:')
+c = form.number_input('Beta:')
 form.form_submit_button('Enviar')
-tmax = float(a)
-tmaxr = float(b)
-beta = float(c)
-
-st.write('Tiempo de irradiación='+str(tmax))
-st.write('Tiempo de relajación= '+str(tmaxr))
-st.write('Beta= '+str(beta))
+tmax = a
+tmaxr = b
+beta = c
+tmax = float(tmax)
+if tmax == -9999:
+    st.write('Introduzca el tiepo de irradiación.')
+else:
+    st.write('Tiempo de irradiación='+str(tmax))
+    st.write('Tiempo de relajación= '+str(tmaxr))
+    st.write('Beta= '+str(beta))
 
 # Preguntar al usuario si desea usar un archivo existente o cargar uno nuevo
 option = st.selectbox("Seleccione una opción:",
@@ -302,16 +294,14 @@ if option == "Cargar archivo Excel":
         nn = np.append(nn, n_h[0])
         NN = np.zeros(len(N))
         st.write(df2)
-
-
 if st.button('Empezar simulación'):
 
     warning = st.empty()
     warning.empty()
-    if tmax == 0:
+    if tmax == -9999:
         with warning.container():
             st.write('introduzca tiempo de irradiación')
-    pasos = 100
+    pasos = 50
     # tmax=20                 #tiempo de irradiación
     solirad = integ.RK45(fun=TLINE, t0=0, y0=nn, t_bound=tmax, max_step=np.inf,
                          rtol=0.01, atol=0.01, vectorized=False, first_step=None)
@@ -325,7 +315,7 @@ if st.button('Empezar simulación'):
     imagen = st.empty()
     imagen.empty()
 
-    for i in range(100):
+    for i in range(pasos):
 
         for i in range(1000):
             # get solution step state
@@ -334,6 +324,7 @@ if st.button('Empezar simulación'):
             xi.append(solirad.y)
             # break loop after modeling is finished
             if solirad.status == 'finished':
+
                 break
         xtemp, ttemp = g200(np.array(xi), ti)
         # Representamos la concentración en las trampas en la irradiación
@@ -344,6 +335,7 @@ if st.button('Empezar simulación'):
             plt.title(
                 'Concentracion de electrones en las trampas en la irradiación')
             plt.xlabel('t(s)')
+
             plt.ylabel('Concentración')
             plt.savefig('src/irrad.jpg')
         image = 'src/irrad.jpg'
@@ -411,7 +403,6 @@ if st.button('Empezar simulación'):
     finir = time.time()
     print('resuelto en: '+str(finir-inii))
     xr = np.array(xr)
-
     plt.figure(3)
     # Representamos la concentración en las trampas en la irradiación
     for i in range(1, len(nn)-3):
@@ -460,7 +451,7 @@ if st.button('iniciar calentamiento'):
     imac = st.empty()
     imac.empty()
     inicio = time.time()
-    for j in range(100):
+    for j in range(50):
         for i in range(3000):
             # get solution step state
             solcal.step()
@@ -507,3 +498,7 @@ if st.button('iniciar calentamiento'):
         else:
             fin = time.time()
             print(j/49, inicio-fin)
+
+
+qué harías para optimizar este código?
+
